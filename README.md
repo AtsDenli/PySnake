@@ -1,1 +1,1 @@
-Pysnake game, played by AI that uses Reinforcement learning
+Pysnake game, played by a combination of search algorithms.
