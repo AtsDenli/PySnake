@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 
+#window and block sizes
 WIDTH = 720
 HEIGHT = 720
 BLOCKSIZE = int(720/24)
@@ -17,12 +18,14 @@ class Snake():
         self.veloY = 0
         self.veloX = 0
         self.length = 1
-        self.occupies = [(4,12,0)]
+        self.occupies = [(4,12)]
 
     def update(self, keyEvent, grow,apple):
-        if (self.x>24 or self.x < 0 or self.y > 24 or self.y < 0):
+        #kills snake if it hits a wall
+        if (self.x>24 or self.x < 0 or self.y > 24 or self.y < 0 or (self.x,self.y) in self.occupies):
             self.gameOver()
             apple.gameOver()
+        #makes snake grow if it eats an apple and makes it look like its moving
         self.occupies.append((self.x,self.y,1 if keyEvent else 0))
         self.x += self.veloX
         self.y += self.veloY
@@ -30,8 +33,8 @@ class Snake():
             self.occupies.pop(0)
         self.length += 1 if grow else self.length
 
-
-    def gameOver(self,):
+    #resets the snake
+    def gameOver(self):
         self.x = 4
         self.y = 12
         self.veloY = 0
@@ -46,9 +49,10 @@ class Apple():
         self.y = 12
     
     def update(self, grid):
-        self.newX, self.newY = random.randint(0,23), random.randint(0,23)
+        #places the apple on a new square if it is eaten
+        self.newX, self.newY = random.randint(0,22), random.randint(0,22)
         while grid[self.newX][self.newY] != 0:
-            self.newX, self.newY = random.randint(0,23), random.randint(0,23)
+            self.newX, self.newY = random.randint(0,22), random.randint(0,22)
         self.x = self.newX
         self.y = self.newY
     
@@ -112,12 +116,12 @@ def main():
             snake.update(keyEvent,grow,apple)
             apple.update(grid)
         else:
-            snake.update(keyEvent, grow,apple)
+            snake.update(keyEvent,grow,apple)
         
         pygame.display.update()
         clock.tick(15) 
 
-
+#gives blocks their colours
 def blockColour(grid,i,j):
     if grid[i][j] == 0:
         return (0,0,0)
