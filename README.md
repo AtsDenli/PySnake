@@ -1,1 +1,1 @@
-Pysnake game, played by a combination of search algorithms.
+Pysnake game, played by a search algorithms using Manhattan Heureustics.
