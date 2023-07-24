@@ -1,1 +1,1 @@
-Pysnake game, played by a search algorithms using Manhattan Heureustics.
+Snake Game made in python using pygame
